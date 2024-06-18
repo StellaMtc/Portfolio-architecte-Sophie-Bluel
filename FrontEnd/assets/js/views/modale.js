@@ -1,5 +1,5 @@
-import { works, deleteWork, loadCategoriesFromAPI, sendNewWork } from "./works.js";
-import { displayWorks, createWorkCard } from "./categories.js";
+import { works, deleteWork, loadCategoriesFromAPI, sendNewWork } from "./libs/works.js";
+import { displayWorks, createWorkCard } from "./libs/categories.js";
 
 // Récupère dans le DOM l'emplacement des éléments
 const modaleDiv = document.querySelector(".modale");

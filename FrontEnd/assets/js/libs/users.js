@@ -1,4 +1,4 @@
-import { showModale } from "./modale.js";
+import { showModale } from "./views/modale.js";
 
 // MARK: - AFFICHAGE DU MODE ÉDITION
 

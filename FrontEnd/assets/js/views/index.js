@@ -1,7 +1,7 @@
 
-import { showEditModeIfNecessary, isUserLogged } from "./users.js";
-import { loadGalleryFromAPI } from "./works.js";
-import { displayFilter, displayWorks } from "./categories.js";
+import { showEditModeIfNecessary, isUserLogged } from "./libs/users.js";
+import { loadGalleryFromAPI } from "./libs/works.js";
+import { displayFilter, displayWorks } from "./libs/categories.js";
 
 // Charge les données depuis l'API et les affiche dans la gallerie
 loadGalleryFromAPI().then(success => {

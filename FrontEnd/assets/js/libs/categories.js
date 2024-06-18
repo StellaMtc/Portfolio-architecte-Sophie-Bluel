@@ -1,4 +1,4 @@
-import { works } from "./works.js";
+import { works } from "./libs/works.js";
 
 // Récupère dans le DOM l'emplacement des éléments
 const galleryElem = document.querySelector(".gallery");
