@@ -12,7 +12,7 @@ passwordInput.addEventListener("focus", hideMessageError);
 loginForm.addEventListener("submit", checkLogin);
 
 
-// MARK: - FONCTIONS
+//  FONCTIONS
 
 /**
  * Affiche le message d'erreur

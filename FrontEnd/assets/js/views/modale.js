@@ -1,5 +1,5 @@
-import { works, deleteWork, loadCategoriesFromAPI, sendNewWork } from "./libs/works.js";
-import { displayWorks, createWorkCard } from "./libs/categories.js";
+export { works, deleteWork, loadCategoriesFromAPI, sendNewWork } from "./libs/works.js";
+export { displayWorks, createWorkCard } from "./libs/categories.js";
 
 // Récupère dans le DOM l'emplacement des éléments
 const modaleDiv = document.querySelector(".modale");
@@ -56,7 +56,7 @@ function addModaleListeners() {
     });
 }
 
-// MARK: - 1ère MODALE
+//  1ère MODALE
 
 /**
  * Permet d'afficher la modale
@@ -156,7 +156,7 @@ function displayWorksModale() {
     });
 }
 
-// MARK: - 2ème Modale
+// 2ème Modale
 
 /**
  * Affiche la modale d'ajout de projet

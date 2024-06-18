@@ -1,4 +1,4 @@
-import { works } from "./libs/works.js";
+import { works } from "./works.js";
 
 // Récupère dans le DOM l'emplacement des éléments
 const galleryElem = document.querySelector(".gallery");
@@ -6,7 +6,7 @@ const filterElem = document.querySelector(".filter");
 
 
 
-// MARK: - FILTRAGE DES DONNÉES
+// FILTRAGE DES DONNÉES
 
 
 /**

@@ -1,9 +1,9 @@
 // Contient l'ensemble des projet de la gallerie
-export let works = [];
+import let works = [];
 
 
 
-// MARK: - CHARGEMENT DES DONNÉES DEPUIS L'API
+// CHARGEMENT DES DONNÉES DEPUIS L'API
 
 
 /**

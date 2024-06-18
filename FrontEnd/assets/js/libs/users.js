@@ -1,6 +1,6 @@
 import { showModale } from "./views/modale.js";
 
-// MARK: - AFFICHAGE DU MODE ÉDITION
+//AFFICHAGE DU MODE ÉDITION
 
 
 export function showEditModeIfNecessary () {
