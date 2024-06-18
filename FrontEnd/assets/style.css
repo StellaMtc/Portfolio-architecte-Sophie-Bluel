@@ -1,88 +1,21 @@
 /* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
+v2.0 | 20110126
+License: none (public domain)
 */
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -90,128 +23,191 @@ video {
 	font: inherit;
 	vertical-align: baseline;
 }
-
 /* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-
 body {
 	line-height: 1;
 }
-
-ol,
-ul {
+ol, ul {
 	list-style: none;
 }
-
-blockquote,
-q {
+blockquote, q {
 	quotes: none;
 }
-
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote:before, blockquote:after,
+q:before, q:after {
 	content: '';
 	content: none;
 }
-
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
 
-/** end reset css **/
+a {
+	text-decoration: none;
+	color: black;
+}
+/* -------------------------------- end reset css --------------------------------*/
+
+/* -------------------------------- General -------------------------------- */
+
 body {
-	background: #FFFEF8;
-	width: 100%;
-	font-family: 'Work Sans', sans-serif;
+	font-family: 'Work Sans', sans-serif ;
 	font-size: 14px;
+	font-weight: 400;
+	background-color: #FFFEF8;
+	color: #3D3D3D;
+}
+
+.page-container {
+	max-width: 1140px;
+	margin:auto;
 }
 
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 200px;
+	margin: 50px 0
+}
+
+main {
+	margin: 130px 90px 20px 90px;
 }
 
 section {
-	margin: 50px 200px;
+	margin: 50px 0;
 }
 
 h1 {
 	display: flex;
 	flex-direction: column;
+	gap: 4px;
 	font-family: 'Syne', sans-serif;
 	font-size: 22px;
 	font-weight: 800;
 	color: #B1663C;
 }
 
-h1>span {
+h1 a {
+	color: #B1663C;
+}
+
+h1 > span {
 	font-family: 'Work Sans', sans-serif;
-	font-size: 10px;
+	font-size:10px;
 	letter-spacing: 0.1em;
+	font-weight: 400;
 	text-transform: uppercase;
 }
 
-h2 {
+h2{
 	font-family: 'Syne', sans-serif;
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154;
+	color: #1D6154
 }
+/* -------------------------------- EDIT MODE -------------------------------- */
+
+.edit {
+	display: flex;
+	background-color: black;
+	justify-content: center;
+	align-items: center;
+	gap: 20px; 
+}
+
+.edit.hidden {
+	display: none;
+}
+
+.edit-mode {
+	display: flex;
+	align-items: flex-end;
+	gap: 10px;
+	color: white;
+}
+
+.edit-mode img {
+	width: 18px;
+	height: 18px;
+}
+
+.edit-button {
+	color: black;
+	background-color: white;
+	border-radius: 60px;
+	padding: 10px 23px;
+	margin: 10px 0;
+}
+
+
+/* -------------------------------- HEADER -------------------------------- */
 
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
+	gap: 40px;
 }
-
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
 
-nav a {
-	color: black;
-	text-decoration: none;
-}
-
-nav a:hover {
+nav li a:hover {
 	color: #B1663C;
 }
 
+nav li a strong {
+	font-weight: 600;
+}
+
+nav li img {
+	width: 20px;
+	height: 20px;
+}
+
+
+/* -------------------------------- MAIN -------------------------------- */
+
 #introduction {
 	display: flex;
-	align-items: center;
-	margin: 50px 200px;
+	align-items: start;
+	gap : 50px;
 }
 
 #introduction figure {
 	flex: 1;
 }
 
-#introduction img {
+#introduction .intro-image {
 	display: block;
 	margin: auto;
-	width: 80%;
+	width: 100%;
 }
 
 #introduction article {
 	flex: 1;
+}
+
+.modify {
+	display: flex;
+	align-items: flex-end;
+	gap: 8px;
+	margin: 15px 0 15px 0;
+}
+
+.modify.hidden {
+	visibility: hidden;
+}
+
+.modify img {
+	width: 18px;
+	height: 18px;
 }
 
 #introduction h2 {
@@ -219,18 +215,52 @@ nav a:hover {
 }
 
 #introduction p {
-	margin-bottom: 0.5em;
+	margin-bottom: 1.3em;
 }
 
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+#portfolio {
+	margin-top: 110px;
 }
 
-.portfolio__title {
-	align-items: center;
+.title-portfolio {
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	margin-bottom: 50px;
+}
+
+.title-portfolio .modify {
+	margin: 0 0 0 30px;
+}
+
+.title-portfolio .modify.hidden {
+	display: none;
+}
+
+.filter {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 50px;
+}
+
+.filter button {
+	border: 1px solid #1D6154;
+	border-radius: 50px;
+	padding: 9px 15px;
+	min-width: 100px;
+	background-color: transparent;
+	font-family: "Syne", sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	color: #1D6154;
+	cursor: pointer;
+}
+
+.filter button.selected,
+.filter button:hover {
+	background-color: #1D6154;
+	color: white;
 }
 
 .gallery {
@@ -245,58 +275,49 @@ nav a:hover {
 	width: 100%;
 }
 
-/* Filtres */
-.filters {
-	align-items: center;
-	display: flex;
-	gap: 15px;
-	justify-content: center;
-	margin-bottom: 60px;
-	margin-top: 20px;
+.gallery figcaption {
+	margin-top: 7px;
 }
 
-.filtersNone {
-	border: 1px solid #1D6154;
-	border-radius: 60px;
-	color: #1D6154;
-	cursor: pointer;
-	font-family: 'Syne', sans-serif;
-	padding: 10px 25px;
-}
+/* -------------------------------- FORM in INDEX & LOGIN -------------------------------- */
 
-.filterActive {
-	color: white;
-	background-color: #1D6154;
-}
-
-#contact {
-	width: 30%;
+#contact,
+#login {
+	width: 380px;
 	margin: auto;
 }
 
-#contact>* {
+#contact > *,
+#login > * {
 	text-align: center;
 }
 
-#contact h2 {
+#contact h2,
+#login h2 {
 	margin-bottom: 20px;
 }
 
-#contact form {
+#contact form,
+#login form {
 	text-align: left;
-	margin-top: 30px;
+	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input,
+#login input,
+.modale input,
+.modale select {
 	height: 50px;
-	font-size: 1.2em;
+	font-size: 1.1em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	padding: 0 16px;
 }
 
-#contact label {
+#contact label,
+#login label {
 	margin: 2em 0 1em 0;
 }
 
@@ -305,143 +326,278 @@ nav a:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"] {
-	cursor: pointer;
+#login {
+	margin-bottom: 380px;
+}
+
+#login form a {
+	color: #3D3D3D;
+	font-weight: 500;
+	align-self: center;
+	text-decoration: underline;
+}
+
+#login form a:hover {
+	color: #B1663C;
+}
+
+input[type="submit"],
+.modale button {
 	font-family: 'Syne', sans-serif;
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	margin: 2em auto;
+	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
+	cursor: pointer;
+	height: 36px;
+	border: none;
 }
 
-/* Footer */
+.error-message {
+	padding-bottom: 25px;
+	text-align: center;
+	color: red;
+}
+
+.error-message.hidden {
+	display: none;
+}
+
+
+/* -------------------------------- FOOTER -------------------------------- */
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 20px 200px;
+	margin: 2em
+	
 }
 
-/* Mode Edition */
-#navEdition {
+
+/* -------------------------------- MODALE -------------------------------- */
+
+.modale {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	display: flex;
 	align-items: center;
-	background: black;
-	display: none;
-	gap: 21px;
-	height: 59px;
 	justify-content: center;
 }
 
-.modEdition {
-	color: white;
-}
-
-.modPublish {
-	background: white;
-	border-radius: 60px;
-	color: black;
-	cursor: pointer;
-	padding: 11px 23px;
-}
-
-.buttonModify {
-	cursor: pointer;
+.modale.hidden {
 	display: none;
-	margin-left: 57px;
-	margin-top: 15px;
 }
 
-.buttonModifyOne {
-	color: black;
-	cursor: pointer;
-	display: none;
-	margin-top: -25px;
-	padding-left: 31px;
+@keyframes modale-opacity {
+	from {opacity: 0;}
+	to {opacity: 1;}
 }
 
-.buttonModifyTwo {
-	cursor: pointer;
-	display: none;
-	margin-top: -30px;
-	padding-bottom: 20px;
+.modale-animation {
+	animation-name: modale-opacity;
+	animation-duration: 0.5s;
 }
 
-/* Filter */
-.error {
-	grid-column: 2;
-	margin: 30px 0;
-	text-align: center;
-	font-size: 1rem;
+.modale-content {
+	min-height: 300px;
+	width: 630px;
+	background-color: white;
+	border-radius: 10px;
 }
 
-.filters {
+.modale header {
+	display: flex;
+	justify-content: space-between;
+	margin : 0;
+	padding: 28px 28px 10px 28px;
+}
+
+.modale header a {
 	display: flex;
 	justify-content: center;
-	margin: 40px 0;
-}
-
-/* Ajout d'un effet de survol en vert sur les boutons de filtre */
-.filter__btn {
-    text-decoration: none; /* Supprime le soulignement des liens */
-    color: #1D6154;
-    background-color: white;
-    border: 1px solid #1D6154;
-    border-radius: 25px;
-    padding: 10px 20px;
-    margin: 0 15px;
-    font-family: "Syne";
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.5s ease;
-    display: inline-block;
-}
-
-.filter__btn:hover {
-    color: white;
-    background-color: #1D6154;
-}
-
-/* Style pour le bouton actif */
-.filter__btn--active {
-    color: white;
-    background-color: #1D6154;
-}
-
-
-.filter__btn,
-.btn-admin {
-	font-family: 'Syne', sans-serif;
-	padding: 10px 20px;
-	margin: 0 15px;
-	border: 1px solid #1D6154;
-	border-radius: 25px;
-	color: #1D6154;
-	background-color: white;
-	font-size: 16px;
-	font-weight: 700;
+	align-items: center;
+	height: 24px;
 	cursor: pointer;
-	transition: all 0.5s ease;
 }
 
-.filter__btn--active,
-.btn-admin {
-	color: white;
-	background-color: #1D6154;
+.back-button.hidden {
+	visibility: hidden;
 }
 
-/* Login */
-.login {
+.modale header a img {
+	height: 12px;
+}
+
+.modale-main,
+.modale-addphoto {
+	margin: 0 105px 48px 105px;
+}
+
+.modale-main.hidden,
+.modale-addphoto.hidden {
+	display: none;
+}
+
+.modale h2 {
+	color: black;
+	font-weight: 400;
+	font-family: "Work Sans", sans-serif;
+	font-size: 26px;
+	margin-bottom: 46px;
+	text-align: center;
+}
+
+.modale button {
+	margin: 0;
+}
+
+
+/* MODALE-MAIN */
+
+.modale-gallery {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 8px;
+	grid-row-gap: 11px;
+	padding-bottom: 47px;
+
+}
+
+.modale-gallery figure {
+	position: relative;
+}
+
+.modale-gallery img {
+	width: 100%;
+}
+
+.modale-gallery .modale-icon {
+	background-color: black;
+	width: 17px;
+	height: 17px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 2px;
+	position: absolute;
+}
+
+.modale-gallery .icon-move {
+	top: 6px;
+	right: 26px;
+}
+
+.modale-gallery .icon-delete {
+	top: 6px;
+	right: 6px;
+}
+
+.modale-gallery .modale-icon img {
+	width: 11px;
+	height: 11px;
+}
+
+.modale-gallery figcaption {
+	margin-top: 3px;
+}
+
+.modale-modify {
+	padding-top: 38px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
-	height: 80vh;
+	row-gap: 25px;
+	border-top: 1px solid #B3B3B3;
 }
 
-.login a {
-	text-decoration: underline;
-	margin-bottom: 100px;
+.modale-modify a {
+	color: #D65353;
+}
+
+/* MODALE-ADDPHOTO */
+
+
+
+.modale-addphoto form label {
+	margin-bottom: 10px;
+}
+
+.modale-addphoto input,
+.modale-addphoto select {
+	margin-bottom: 21px;
+}
+
+.image-selector {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 180px;
+	background-color: #E8F1F7;
+	margin-bottom: 30px;
+}
+
+.image-selector .image-selected {
+	height: 100%;
+}
+
+.image-selector .image-unselected img {
+	height: 58px;
+	width: 58px;
+	margin-bottom: 21px;
+}
+
+.image-unselected {
+	text-align: center;
+}
+
+.image-selector .image-selected.hidden,
+.image-selector .image-unselected.hidden {
+	display: none;
+}
+
+.image-selector input[type="file"] {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.image-selector label {
+	display: block;
+	margin-bottom: 8px;
+	background-color: #CBD6DC;
+	color: #306685;
+	font-weight: 500;
+	font-family: 'Work Sans';
+	border-radius: 60px;
+	cursor: pointer;
+	padding: 12px 20px;
+}
+
+.modale-addphoto .modale-addinfo {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 26px;
+}
+
+.modale-addinfo select {
+	border-right: 21px solid transparent;
+}
+
+.modale-modify .validate-button {
+	margin : 0;
+}
+
+.modale-modify .validate-button.disabled {
+	background-color: #A7A7A7;
 }

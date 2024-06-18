@@ -1,59 +1,46 @@
-export async function login(username, password) {}
+import { showModale } from "./modale.js";
 
-// Création de la fonction pour vérifier si l'utilisateur est connecté
-async function checkUserConnected() {
-    const token = localStorage.getItem('token');
-    /* Vérification présence token
-       console.log(token);
-    */
-    const userConnected = token != null && token != undefined && token != '';
+// MARK: - AFFICHAGE DU MODE ÉDITION
 
-    if (userConnected) {
-        // Si l'utilisateur est connecté 
-        // Changement du bouton "login" en "logout" + déconnexion 
-        const loginLink = document.querySelector(".login__link");
-        loginLink.textContent = "logout";
-        loginLink.addEventListener("click", userLogOut);
 
-        // Affichage des éléments : barre d'édition, boutons "modifier"
-        const navEdition = document.getElementById('navEdition');
-        navEdition.style.display = 'flex';
-        const buttonModify = document.querySelector(".buttonModify");
-        buttonModify.style.display = 'block';
-        const buttonModifyOne = document.querySelector(".buttonModifyOne");
-        buttonModifyOne.style.display = 'block';
-        const buttonModifyTwo = document.querySelector(".buttonModifyTwo");
-        buttonModifyTwo.style.display = 'block';
+export function showEditModeIfNecessary () {
+    // si l'utilisateur est connecté, on modifie la page index.html
+    if (isUserLogged()) {
+        const loginElem = document.getElementById("log");
+        // transforme le contenu de l'élément du DOM de "login" en "logout"
+        loginElem.innerText = "logout";
+        loginElem.addEventListener("click", function (event){
+            // Empêche le comportement par défaut (rediriger vers la page login.html) 
+            event.preventDefault();
+            // Supprime du session storage le token
+            window.sessionStorage.removeItem("token");
+            // raffraichit la page
+            document.location.reload();
+        })
+        // On récupère l'emplacement des élements qui ont la classe hidden dans le DOM
+        const hiddenElements = document.querySelectorAll(".edit.hidden, .modify.hidden");
+        for (let element of hiddenElements) {
+            // Affiche les boutons "modifier" et le block noir "mode édition"
+            element.classList.remove("hidden");
+        }
 
-        // Les filtres sont masqués
-        const filtersSection = document.querySelector(".filters");
-        filtersSection.style.display = 'none';
-    } else {
-        // Si l'utilisateur est déconnecté
-        // Logout redevient login
-        const loginLink = document.querySelector(".login__link");
-        loginLink.textContent = "login";
-
-        // Les éléments d'édition sont masqués
-        const navEdition = document.getElementById('navEdition');
-        navEdition.style.display = 'none';
-        const buttonModify = document.querySelector(".buttonModify");
-        buttonModify.style.display = 'none';
-        const buttonModifyOne = document.querySelector(".buttonModifyOne");
-        buttonModifyOne.style.display = 'none';
-        const buttonModifyTwo = document.querySelector(".buttonModifyTwo");
-        buttonModifyTwo.style.display = 'none';
-
-        // Les filtres sont visibles 
-        const filtersSection = document.querySelector(".filters");
-        filtersSection.style.display = 'flex';
+        // On ajoute la fonction d'affichage de la modale sur le bouton modifier de "mes projets"
+        const modifyProjectButton = document.querySelector("#portfolio .modify");
+        // Crée un eventListener au click du bouton modifier (mes projets)
+        modifyProjectButton.addEventListener("click", function (event){
+            event.preventDefault();
+            showModale();
+        });
     }
 }
 
-// Fonction de déconnexion
-function userLogOut() {
-    // Nettoyage du localStorage => suppression du token
-    localStorage.clear();
-    // Rechargement de la page 
-    window.location.reload();
+/**
+ * Vérifie si l'utilisateur est identifié
+ * @returns un booleen
+ */
+export function isUserLogged() {
+    // On récupère l'eventuel token qui est présent dans le sessionStorage
+    const token = window.sessionStorage.getItem("token");
+    // Si le token est présent, on considère l'utilisateur comme loggé
+    return token !== null; 
 }

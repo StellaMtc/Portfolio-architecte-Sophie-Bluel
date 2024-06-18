@@ -1,104 +1,150 @@
-export async function getCategories(){}
-// Gestion des appels à l'API
+import { works } from "./works.js";
 
-// Récupération des données des travaux
-async function getWorks() {
-    await fetch("http://localhost:5678/api/works")
-        .then(response => response.json())
-        .then(dataWorks => {
-            /* Test de récupération des données 
-               console.table(dataWorks);
-            */
-            // Sélection de la div qui va contenir les travaux
-            const gallery = document.querySelector(".gallery");
-            gallery.innerHTML = "";
+// Récupère dans le DOM l'emplacement des éléments
+const galleryElem = document.querySelector(".gallery");
+const filterElem = document.querySelector(".filter");
 
-            // On crée les travaux à partir des données récupérées via l'API
-            dataWorks.forEach((work) => {
-                // Création des éléments nécessaires à l'affichage des travaux
-                const card = document.createElement("figure");
-                const imgCard = document.createElement("img");
-                const titleCard = document.createElement("figcaption");
 
-                // On récupère les données importantes pour afficher les travaux
-                imgCard.src = work.imageUrl;
-                imgCard.alt = work.title;
-                imgCard.setAttribute('category', work.categoryId);
-                titleCard.innerText = work.title;
 
-                // On relie les éléments img et title à leur parent card
-                card.appendChild(imgCard);
-                card.appendChild(titleCard);
+// MARK: - FILTRAGE DES DONNÉES
 
-                // On relie la card à la balise div qui contient la galerie
-                gallery.appendChild(card);
-            });
-        });
+
+/**
+ * Affiche les bouttons filtre sur la page
+ */
+export function displayFilter() {
+
+    // 1. On rajoute un bouton "tous"
+    createButtonFilter("Tous", undefined, true);
+
+    // 2. On rajoute les boutons avec le nom des catégories.
+    // 2-1. On récupère le tableau de catégories uniques
+    const categoriesUniques = generateUniqueCategories();
+
+    // 2-2. À chaque tour de boucle on rajoute un bouton au nom de la catégorie
+    for (let category of categoriesUniques) {
+        createButtonFilter(category.name, category.id, false);
+    }
 }
 
-// Récupération des catégories
-async function getCategories() {
-    await fetch("http://localhost:5678/api/categories")
-        .then(response => response.json())
-        .then(dataCategories => {
-            /* Test de récupération des catégories
-               console.table(dataCategories);
-            */
-            // Sélection de la div qui va contenir les filtres
-            const filters = document.querySelector(".filters");
+/**
+ * Créer un boutton de filtre, paramètre un évenement et l'ajoute sur la page
+ * @param {String} name texte affiché dans le bouton
+ * @param {Number} categoryId l'id de la catégorie (undefined pour le bouton "tous")
+ * @param {Boolean} isSelected permet d'ajouter la class selected (qui colore le bouton)
+ */
+function createButtonFilter(name, categoryId, isSelected) {
+    // 1. Crée le boutton dans le DOM
+    const buttonElem = document.createElement("button");
+    buttonElem.innerText = name;
 
-            // Création du filtre Tous
-            const allFilter = document.createElement('p');
-            allFilter.textContent = 'Tous';
-            allFilter.classList.add("filtersNone");
-            allFilter.classList.add("filterActive");
-            filters.appendChild(allFilter);
+    if (isSelected) {
+        buttonElem.classList.add("selected");
+    }
+    filterElem.appendChild(buttonElem);
 
-            // Utilisation d'une boucle pour créer les noms des catégories
-            dataCategories.forEach((category) => {
-                const nameFilters = document.createElement("p");
-                nameFilters.innerText = category.name;
-                nameFilters.id = category.id;
-                nameFilters.classList.add("filtersNone");
-                filters.appendChild(nameFilters);
-            });
+    // 2. Ajoute la fonction button click
+    buttonElem.addEventListener("click", function (event) {
+        // attribue l'apparence "selected" au boutton clické dans le DOM
+        changeColorButton(event.target);
+        // l'ID peut être undefined notamment pour le bouton "tous"
+        displayWorks(categoryId);
+    });
+}
 
-            filters.querySelectorAll('p').forEach((filter) => {
-                filter.addEventListener("click", function () {
-                    // Sélection de l'id appliqué lors de la création des images des travaux
-                    const id = this.id;
-                    document.querySelectorAll('.gallery img').forEach(image => {
-                        // Si image = catégorie correspondante, afficher l'image
-                        if (image.getAttribute('category') === id) {
-                            image.parentElement.style.display = 'block';
-                        } else {
-                            // Sinon, masquer
-                            image.parentElement.style.display = 'none';
-                        }
-                    });
-                });
-            });
+/**
+ * attribue l'apparence "selected" au boutton passé en paramètre
+ * @param {Element} button réference au bouton cliqué 
+ */
+function changeColorButton(buttonTarget) {
+    // Supprime la classe selected à tous les boutons
+    const buttonsElem = document.querySelectorAll(".filter button");
+    for (let buttonElem of buttonsElem) {
+        buttonElem.classList.remove("selected");
+    }
+    // Ajoute la classe selected au bouton cliqué
+    buttonTarget.classList.add("selected");
+}
 
-            // Pour le filtre Tous - réinitialisation de l'affichage
-            allFilter.addEventListener('click', function () {
-                // Sélectionne toutes les images de la galerie
-                document.querySelectorAll('.gallery img').forEach(image => {
-                    // Permet d'afficher tous les travaux
-                    image.parentElement.style.display = 'block';
-                });
-            });
+/**
+ * Crée un tableau de catégorie unique
+ * @returns un tableau de catégorie unique (name, Id)
+ */
+function generateUniqueCategories() {
+    // On crée un tableau vide de d'objet catégorie sans doublon
+    let categoriesUniques = [];
 
-            // Sélection du filtre actif
-            const elements = filters.querySelectorAll('p');
-            elements.forEach((element) => {
-                element.addEventListener("click", () => {
-                    elements.forEach((el) => {
-                        // Au clic sur un bouton on retire la classe "active" du filtre "Tous"
-                        el.classList.remove("filterActive");
-                    });
-                    // Et on ajoute cette classe active sur le bouton cliqué
-                    element.classList.add("filterActive");
-                });
-            });
+    for (let work of works) {
+        //on cherche une categorie dans le tableau categoriesUniques qui aurait le même ID que le work actuellement itéré
+        const result = categoriesUniques.find(function (category) {
+            return category.id === work.categoryId;
         });
+        //si la fonction .find ne trouve rien, alors on rajoute l'objet catégorie dans notre tableau
+        if (result === undefined) {
+            categoriesUniques.push(work.category);
+        }
+    }
+    return categoriesUniques;
+}
+
+
+
+// MARK: - AFFICHAGE DES DONNÉES
+
+
+/**
+ * Affiche l'ensemble des projets en les filtrant éventuellement avec la catégoryId
+ * @param {Number} categoryId l'id de la catégorie (undefined pour tout afficher) 
+ */
+export function displayWorks(categoryId) {
+
+    // 1. Efface le contenu de gallery
+    galleryElem.innerHTML = "";
+
+    //2. On appelle la fonction filterWorks pour qu'elle nous retourne le tableau filtré.
+    const filteredWorks = filterWorks(categoryId);
+
+    // 3. Affiche les cards précedemment filtré (ou non) en les créant dans le DOM
+    for (let work of filteredWorks) {
+        createWorkCard(work);
+    }
+}
+
+/**
+ * Filtre les projets selon le numéro de catégorie indiqué
+ * @param {Number} categoryId l'id de la catégorie à filtrer ou undefined pour ne pas filtrer 
+ * @returns le tableau filtré
+ */
+function filterWorks(categoryId) {
+    let filteredWorks;
+
+    if (categoryId === undefined) {
+        filteredWorks = works;
+    } else {
+        filteredWorks = works.filter(function (work) {
+            return categoryId === work.categoryId;
+        });
+    }
+    return filteredWorks;   
+}
+
+/**
+ * Crée un projet dans le DOM de la gallerie
+ * @param {Object} work Le projet au format de l'API
+ */
+export function createWorkCard(work) {
+    const figureElem = document.createElement("figure");
+
+    const imageElem = document.createElement("img");
+    imageElem.src = work.imageUrl;
+    imageElem.alt = work.title;
+    /* crossOrigin pour que les images puissent s'afficher sinon renvoi une erreur empechant le chargement d'images depuis un serveur externe */
+    imageElem.crossOrigin = "anonymous";
+    figureElem.appendChild(imageElem);
+
+    const figcaptionElem = document.createElement("figcaption");
+    figcaptionElem.innerText = work.title;
+    figureElem.appendChild(figcaptionElem);
+
+    galleryElem.appendChild(figureElem);
 }
