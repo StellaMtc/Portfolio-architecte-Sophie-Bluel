@@ -15,13 +15,13 @@ if (localStorage.SophieBluelToken) {
   document.querySelectorAll(".edition-off").forEach((element) => {
     element.style.display = "none";
   });
-  //Ajout du margin-top pour compenser la banniere :
+  // on ajoute du margin-top pour compenser la banniere :
   header.style.marginTop = "100px";
 }
 
-// Fonction de récupération des travaux :
+// Récupération des travaux :
 async function getWorks() {
-  return await fetch(`${apiUrl}works`)
+  return  fetch(`${apiUrl}works`)
     .then((response) => response.json())
     .catch((error) => {
       console.log(`L'API works n'a pas répondue : ${error}`);
@@ -29,7 +29,7 @@ async function getWorks() {
     });
 }
 
-// Fonction de récupération des catégories :
+// Récupération des catégories :
 async function getCategories() {
   return fetch(`${apiUrl}categories`)
     .then((response) => response.json())
@@ -71,8 +71,7 @@ function formatCategories(categories) {
     // on leur attribu leur parent :
     filtres.appendChild(boutonFiltrerCategories);
 
-
-     // au click, il affiche les projets de sa catégorie,
+    // au click, il affiche les projets de sa catégorie,
     // et le bouton change de style ("btn-clicked") :
     boutonFiltrerCategories.addEventListener("click", async () => {
       const worksFromApi = await getWorks();
@@ -92,9 +91,9 @@ function formatCategories(categories) {
 // Format d'affichage des catégories dans le formulaire d'ajout :
 function formatCategoriesSelect(categories) {
   // on pointe le <select> parent des <option value="categorie"> :
-  const addPhotoCategorie = document.getElementById("categorielist");
+  const addPhotoCatergorie = document.getElementById("categorielist");
   // on vide son contenu pour éviter les doublons à la réouverture :
-  addPhotoCategorie.innerHTML = "";
+  addPhotoCatergorie.innerHTML = "";
 
   // on créé le placeholder "choisissez une catégorie" :
   const categoriePlaceHolder = document.createElement("option");
@@ -102,20 +101,20 @@ function formatCategoriesSelect(categories) {
   categoriePlaceHolder.value = "";
   categoriePlaceHolder.setAttribute("disabled", "");
   categoriePlaceHolder.setAttribute("selected", "");
-  addPhotoCategorie.appendChild(categoriePlaceHolder);
+  addPhotoCatergorie.appendChild(categoriePlaceHolder);
 
- // on injecte toutes les catégories :
- for (let i = 0; i < categories.length; i++) {
-  // on récupère le nom & l'id :
-  const nomCategorie = categories[i].name;
-  const Categorie = categories[i].id;
-  // on créé une balise <option> :
-  const categorieOption = document.createElement("option");
+  // on injecte toutes les catégories :
+  for (let i = 0; i < categories.length; i++) {
+    // on récupère le nom & l'id :
+    const nomCategorie = categories[i].name;
+    const Categorie = categories[i].id;
+    // on créé une balise <option> :
+    const categorieOption = document.createElement("option");
 
-  categorieOption.innerText = nomCategorie;
-  categorieOption.value = `${Categorie}`;
-  addPhotoCategorie.appendChild(categorieOption);
-}
+    categorieOption.innerText = nomCategorie;
+    categorieOption.value = `${Categorie}`;
+    addPhotoCatergorie.appendChild(categorieOption);
+  }
 }
 
 // Format d'affichage de la galerie principale :
@@ -152,7 +151,7 @@ function formatWorks(works, categoryId = null) {
 async function displayMainGallery() {
   const worksFromApi = await getWorks();
   formatWorks(worksFromApi);
-} 
+}
 
 // Affichage des boutons catégories :
 async function displayCategoriesButtons() {
@@ -174,8 +173,6 @@ function formatWorksInModale(works) {
   // on efface les élément présent dans la gallery
   mainModaleGallery.innerHTML = "";
 
-
-
   // on affiche chaque projets avec une boucle for
   for (let i = 0; i < works.length; i++) {
     // Création d'une carte par projet (preview + soustitre) :
@@ -193,7 +190,7 @@ function formatWorksInModale(works) {
     projetImage.alt = works[i].title;
     projetImage.title = works[i].title;
     projetPreview.appendChild(projetImage);
-    // Corbeille :
+    // trash = bouton de suppression :
     const projetDelete = document.createElement("i");
     projetDelete.id = `deleteProjet-${works[i].id}`;
     projetDelete.classList.add("delete-btn", "fa-solid", "fa-trash-can");
@@ -215,29 +212,29 @@ function formatWorksInModale(works) {
     projetSousTitre.dataset.id = `editerprojet-${works[i].id}`;
     projetCard.appendChild(projetSousTitre);
 
- // Suppression d'un projet si on clique sur la corbeille :
- projetDelete.onclick = (id) => deleteConfirm(id);
+    // Suppression d'un projet au click sur la corbeille :
+    projetDelete.onclick = (id) => deleteConfirm(id);
 
- // Fonction de confirmation de suppression :
- function deleteConfirm() {
-   const deleteConfirmationContainer = document.getElementById(
-     "deleteConfirmationContainer"
-   );
-       // on affiche la fenêtre de confirmation :
-       deleteConfirmationContainer.style.display = "flex";
-       // on récupère le nom du projet :
-       workNameToDelete.innerText = `${works[i].title}`;
-       // on récupère l'image ainsi que ses attibuts :
-       workImageToDelete.src = works[i].imageUrl;
-       workImageToDelete.alt = works[i].title;
-       workImageToDelete.title = works[i].title;
-       workImageToDelete.width = 150;
-       workImageToDelete.style.margin = "0 auto";
-       // évènement au click sur "Annuler" :
-       annulersuppression.onclick = () => {
-         console.log("Suppression annulée");
-         deleteConfirmationContainer.style.display = "none";
-       };
+    // Fonction de confirmation de suppression :
+    function deleteConfirm() {
+      const deleteConfirmationContainer = document.getElementById(
+        "deleteConfirmationContainer"
+      );
+      // on affiche la fenêtre de confirmation :
+      deleteConfirmationContainer.style.display = "flex";
+      // on récupère le nom du projet :
+      workNameToDelete.innerText = `${works[i].title}`;
+      // on récupère l'image & ses attibuts :
+      workImageToDelete.src = works[i].imageUrl;
+      workImageToDelete.alt = works[i].title;
+      workImageToDelete.title = works[i].title;
+      workImageToDelete.width = 150;
+      workImageToDelete.style.margin = "0 auto";
+      // évènement au click sur "Annuler" :
+      annulersuppression.onclick = () => {
+        console.log("Suppression annulée");
+        deleteConfirmationContainer.style.display = "none";
+      };
       // évènement au click sur "Supprimer" :
       confirmersuppression.onclick = () => {
         console.log(`Projet n°${works[i].id} supprimé !`);
@@ -252,7 +249,7 @@ function formatWorksInModale(works) {
   }
 }
 
-// Fonction de suppression des travaux :
+// Fonction de suppression de projet(s) :
 function deleteWork(id) {
   fetch(`${apiUrl}works/${id}`, {
     method: "DELETE",
@@ -264,12 +261,11 @@ function deleteWork(id) {
   }).catch((error) => console.log(`L'API Works n'a pas répondue : ${error}`));
 }
 
-// Affichage de la galerie dans la modale :
+// Affichage de la gallery dans la modale :
 async function displayGalleryInModale() {
   const worksFromApi = await getWorks();
   formatWorksInModale(worksFromApi);
 }
-
 
 // Fonction d'ajout de photo :
 function addPhoto() {
@@ -285,20 +281,19 @@ function addPhoto() {
   let imageIsValid = false;
   let categoryIsValid = false;
 
-  //  une fois validé, on stock la valeur des inputs :
+  //  une fois validés, on stock la valeur des inputs :
   let title, image, category;
 
-  
-  // Modification de couleur du bouton "envoyer" :
+  // changement de couleur du bouton envoyer :
   function readyToUpload() {
     // on pointe le bouton submit :
     const submitPhoto = document.getElementById("submitPhoto");
-    // si tous les inputs sont validés = "true"
+    // si tous les inputs sont validé "true"
     if ((titleIsValid && categoryIsValid && imageIsValid) === true) {
       // le bouton devient vert :
       submitPhoto.style.backgroundColor = "var(--middle-green)";
     } else {
-      // dans le cas contraire il est gris :
+      // sinon il est gris :
       submitPhoto.style.backgroundColor = "var(--invalid-btn-grey)";
     }
   }
@@ -306,7 +301,7 @@ function addPhoto() {
   // On injecte les catégories dans le formulaire :
   displayCategoriesSelect();
 
-  // Récupération de l'image pour l'aperçu :
+  // Récupération de l'image pour l'apercu :
   function previewImage(e) {
     const file = e.target.files[0];
     const fileReader = new FileReader();
@@ -315,11 +310,11 @@ function addPhoto() {
     fileReader.addEventListener("load", (e) => displayUploadImage(e));
   }
 
-  // Afichage de l'aperçu de l'image :
+  // Afichage de l'apercu de l'image :
   function displayUploadImage(e) {
-    // Disparition des options de choix d'image :
+    // on fait disparaitre les options de choix d'image :
     uploadPhotoMenu.style.display = "none";
-    // on fait apparaitre l'image ..
+    // on fait apparaitre l'immage ..
     const importedPhoto = document.getElementById("importedPhoto");
     importedPhoto.style.display = "flex";
     importedPhoto.src = e.target.result;
@@ -341,7 +336,7 @@ function addPhoto() {
     });
   }
 
-  // Vérification et validation de l'ajout de photo :
+  // on pointe et valide l'ajout de photo :
   const addPhotoInput = document.querySelector('input[id="addphoto"]');
   // addPhotoInput.addEventListener("change", previewImage);
   addPhotoInput.addEventListener("change", (e) => {
@@ -364,9 +359,9 @@ function addPhoto() {
     }
   });
 
-    // on vérifie puis on valide le titre :
+  // on pointe et valide le titre :
   const titlePhotoInput = document.querySelector('input[id="phototitle"]');
-  // Affichage d'une erreur si le nombre de caractères est insuffisant :
+  // on affiche une erreur si la longueur n'est pas bonne :
   titlePhotoInput.addEventListener("input", (e) => {
     if (
       // e.target.value.length > 0 &&
@@ -383,9 +378,9 @@ function addPhoto() {
     }
   });
 
-  // on pointe et on valide la liste de catégories :
+  // on pointe et valide la liste de catégories :
   const selectCatInput = document.querySelector('select[id="categorielist"]');
-  // Une erreur apparaît si rien n'est selectionné :
+  // on affiche une erreur si aucune n'est sélectionnée :
   selectCatInput.addEventListener("change", () => {
     if (selectCatInput.selectedIndex !== 0) {
       displayError("categorie", "");
@@ -398,22 +393,22 @@ function addPhoto() {
     }
   });
 
-// Envoi du formulaire :
-addPhotoForm.addEventListener("submit", (e) => {
-  // On evite le rechargement de la page :
-  e.preventDefault();
-  // On valide les inputs :
-  inputsChecker();
-  // si tout les inputs sont validés donc (="true") :
-  if (title && image && category) {
-    // on passe leur valeur dans l'objet formData :
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("image", image);
-    formData.append("category", category);
+  // Envoi du formulaire :
+  addPhotoForm.addEventListener("submit", (e) => {
+    // On evite le rechargement de la page :
+    e.preventDefault();
+    // On valide les inputs :
+    inputsChecker();
+    // si tout les inputs sont validé (="true") :
+    if (title && image && category) {
+      // on passe leur valeur dans l'objet formData :
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("image", image);
+      formData.append("category", category);
 
-       // on envoi la requete POST :
-       fetch(`${apiUrl}works`, {
+      // on envoi la requete POST :
+      fetch(`${apiUrl}works`, {
         method: "POST",
         body: formData,
         headers: {
@@ -421,12 +416,13 @@ addPhotoForm.addEventListener("submit", (e) => {
           Authorization: `Bearer ${localStorage.SophieBluelToken}`,
         },
       })
-        // Un message de confirmation apparaît si l'envoi a fonctionné :
+        // on affiche un msg de confirmation si l'envoi à fonctionné :
         .then(() => alert("Le projet a bien été envoyé !"))
-        // sinon on affiche un message d'erreur :
+        // sinon on affiche un msg d'erreur :
         .catch((error) => alert(`Le projet n'a pas pu être envoyé : ${error}`));
-       // Lorsque l'image est envoyé
-      // disparition de l'aperçu de l'image :
+
+      // une fois que l'image a bien été posté,
+      // on fait disparaitre l'aperçu de l'image :
       importedPhoto.style.display = "none";
       closeimportedPhoto.style.display = "none";
       // on fait ré-apparaitre les options de choix d'image :
@@ -435,14 +431,14 @@ addPhotoForm.addEventListener("submit", (e) => {
       titlePhotoInput.value = "";
       addPhotoInput.value = "";
       selectCatInput.value = "";
-      // on vide les variables :
+      // on vide les variable :
       title = null;
       image = null;
       category = null;
       // le bouton submit redevient gris :
       submitPhoto.style.backgroundColor = "var(--invalid-btn-grey)";
     } else {
-      // si les champs sont mal renseignés on affiche un message d'erreur :
+      // si les champs sont mal renseignés on affiche un msg d'erreur :
       console.log("Veuillez renseigner tous les champs");
     }
   });
@@ -453,7 +449,7 @@ addPhotoForm.addEventListener("submit", (e) => {
     if (titlePhotoInput.value.length < 3 || titlePhotoInput.value.length > 40) {
       displayError("title", "Le titre doit contenir entre 3 et 40 caractères");
       title = null;
-      //Teste DE la catégorie :
+      // on teste la catégoprie :
     } else if (selectCatInput.selectedIndex === 0) {
       displayError("categorie", "Vous devez choisir une catégorie");
       category = null;
@@ -466,7 +462,7 @@ addPhotoForm.addEventListener("submit", (e) => {
       image = null;
       addPhotoInput.value = "";
     } else {
-      // Ici on retire la class .error pour remplacer par valid=true
+      // on retire la class .error et on dit valid=true
       displayError("title", "", true);
       displayError("photo", "", true);
       displayError("categorie", "", true);
@@ -475,23 +471,24 @@ addPhotoForm.addEventListener("submit", (e) => {
       category = selectCatInput.value;
       image = addPhotoInput.files[0];
       // l'image doit etre un objet et non une url !
-      
+      // (note pour moi-même ..)
+      // image = addPhotoInput.value;
     }
   }
 }
 
 //** Lancement de la page d'accueil :
-// Affichage de  la galerie et les catégories :
+// On affiche la gallerie et les catégories :
 displayMainGallery();
 displayCategoriesButtons();
 
-//*--- Ecouteurs d'évènements ---*//
+//*--- EVENTS LISTENERS ---*//
 
-// lorsqu'on clique sur "logout" :
+// au click sur "logout" :
 logoutlink.addEventListener("click", () => {
-  // ici on supprime le token :
+  // on supprime le token :
   localStorage.SophieBluelToken = "";
-  // et on retourne sur index.html :
+  // on retourne sur index.html :
   window.location.href = "index.html";
 });
 
@@ -515,7 +512,7 @@ window.addEventListener("keydown", (e) => {
     displayMainGallery();
   }
 });
-// ou bien en cliquant à coté de la modale :
+// ou en cliaquant à coté de la modale :
 window.addEventListener("click", (e) => {
   if (e.target == modale) {
     modale.style.display = "none";

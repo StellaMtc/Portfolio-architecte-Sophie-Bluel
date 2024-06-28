@@ -1,10 +1,10 @@
 // Import du module de gestion d'affichage des erreurs :
 import { displayError } from "./displayError.js";
 
-// Lien de l'Url de l'API :
+// Url de l'api :
 const apiUrl = "http://localhost:5678/api/";
 
-// Formulaire du Login :
+// On pointe le formulaire du Login :
 const loginForm = document.getElementById("loginForm");
 
 async function authentification() {
@@ -15,22 +15,22 @@ async function authentification() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      // Introduction du mail et du password saisi dans le formulaire :
+      // On inclu le mail et le password saisi dans le formulaire :
       email: email.value,
       password: password.value,
     }),
   })
     .then((response) => response.json())
     .then((data) => {
-      // Seulement si les données de réponses contiennent un token :
+      // Si les données de réponses contiennent un token ...
       if (data.token) {
         // loginerror.innerText = "";
-        // .. Alors on l'enregistre dans le Local Storage ..
+        // .. on l'enregistre dans le Local Storage ..
         localStorage.setItem("SophieBluelToken", data.token);
         // .. puis on redirige l'utilisateurs vers la page d'accueil :
         window.location.href = "index.html";
       } else {
-        // Une erreur apparaît si les données ne contiennent pas de token :
+        // Si les données ne contiennent pas de token, on affiche une erreur :
         console.log("email ou mot de passe incorrect !");
         displayError("logintitle", "email ou mot de passe incorrect !");
       }
@@ -44,15 +44,15 @@ async function authentification() {
     });
 }
 
-//* Ecouteurs d'évènements :
+//* Events Listeners :
 
-// Authentification :
+// A l'envoi du formulaire, on appelle authentification() :
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
   authentification();
 });
 
-//Validation de l'email :
+// Validation de l'email saisit :
 loginForm.addEventListener("input", () => {
   if (!email.validity.valid) {
     displayError("loginemail", "Veuillez saisir une adresse email valide !");
@@ -60,10 +60,10 @@ loginForm.addEventListener("input", () => {
     displayError("loginemail", "");
   }
 });
-// Validation du mot de passe :
+// Validation du mot de passe saisit :
 loginForm.addEventListener("input", () => {
   if (!password.validity.valid) {
-    displayError(
+    errorDisplay(
       "loginpassword",
       "Le mot de passe doit contenir entre 4 et 15 caractères !"
     );
