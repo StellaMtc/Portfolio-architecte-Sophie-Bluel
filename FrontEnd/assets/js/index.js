@@ -1,3 +1,4 @@
+
 // Import du module de gestion d'affichage des erreurs :
 import { displayError } from "./displayError.js";
 
@@ -21,7 +22,7 @@ if (localStorage.SophieBluelToken) {
 
 // Récupération des travaux :
 async function getWorks() {
-  return  fetch(`${apiUrl}works`)
+  return fetch(`${apiUrl}works`)
     .then((response) => response.json())
     .catch((error) => {
       console.log(`L'API works n'a pas répondue : ${error}`);
@@ -314,7 +315,7 @@ function addPhoto() {
   function displayUploadImage(e) {
     // on fait disparaitre les options de choix d'image :
     uploadPhotoMenu.style.display = "none";
-    // on fait apparaitre l'immage ..
+    // on fait apparaitre l'image ..
     const importedPhoto = document.getElementById("importedPhoto");
     importedPhoto.style.display = "flex";
     importedPhoto.src = e.target.result;
@@ -501,28 +502,44 @@ galleryEdition.addEventListener("click", () => {
   displayGalleryInModale();
 });
 // la modale se ferme au click sur le bouton fermer (x) :
-closeModale.addEventListener("click", () => {
+  closeModale.addEventListener("click", () => {
   modale.style.display = "none";
+  importedPhoto.style.display = "none";
+  closeimportedPhoto.style.display = "none";
+  uploadPhotoMenu.style.display = "flex";
+  phototitle.value = ""; // Ici, le titre est effacé
   displayMainGallery();
 });
+
 // ou en appuyant sur Esc, on ferme la modale
 window.addEventListener("keydown", (e) => {
   if (e.key === "Escape" || e.key === "Esc") {
     modale.style.display = "none";
+    importedPhoto.style.display = "none";
+    closeimportedPhoto.style.display = "none";
+    uploadPhotoMenu.style.display = "flex";
+    phototitle.value = ""; // Ici, le titre est effacé
     displayMainGallery();
   }
 });
-// ou en cliaquant à coté de la modale :
+// ou en cliquant à coté de la modale :
 window.addEventListener("click", (e) => {
   if (e.target == modale) {
     modale.style.display = "none";
+    importedPhoto.style.display = "none";
+    closeimportedPhoto.style.display = "none";
+    uploadPhotoMenu.style.display = "flex";
+    phototitle.value = ""; // Ici, le titre est effacé
     displayMainGallery();
   }
 });
+
 // Ouverture de la modale d'ajout photo :
 addPhotoBtn.addEventListener("click", () => {
   addPhoto();
 });
+
+
 // Fermeture de la modale d'ajout photo :
 closeAddPhotoWindow.addEventListener("click", () => {
   modale.style.display = "none";
@@ -532,5 +549,9 @@ closeAddPhotoWindow.addEventListener("click", () => {
 returnToGallery.addEventListener("click", () => {
   addPhotoWindowWrapper.style.display = "none";
   mainModaleWrapper.style.display = "flex";
+  importedPhoto.style.display = "none";
+  closeimportedPhoto.style.display = "none";
+  uploadPhotoMenu.style.display = "flex";
+  phototitle.value = ""; // Ici, le titre est effacé
   displayGalleryInModale();
-});
+})
